@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -25,7 +23,7 @@ class FileCreator {
     }
 
     public void createFile(final String fileName, final Function<Ligne, String> fieldGrouping) throws IOException {
-        final Instant start = Instant.now();
+        final TimeWatcher timeWatcher = TimeWatcher.start();
         final List<String> idsProducts = new ArrayList<>(this.productDescription.keySet());
         final Map<String, List<Ligne>> map = groupeBy(fieldGrouping, this.data);
 
@@ -38,11 +36,10 @@ class FileCreator {
                                   .collect(Collectors.toList());
 
         final String head = createHead(productDescription);
-        System.out.println("Processing Time: " + Duration.between(start, Instant.now()).toMillis() + "ms");
+        System.out.println("Processing Time: " + timeWatcher.format());
 
         Path path = createNewFile(fileName, head, newList);
-        long timeElapsed = Duration.between(start, Instant.now()).toMillis();
-        System.out.println("Total time for create the file: " + timeElapsed + "ms");
+        System.out.println("Total time for create the file: " + timeWatcher.end().format());
         System.out.println("File created: " + path);
         System.out.println("--------------------------------------------");
     }

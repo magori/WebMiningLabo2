@@ -9,11 +9,13 @@ public class Main {
     private static Properties properties = loadConfig();
 
     public static void main(String args[]) throws IOException {
+        System.out.println("-------------------------START--------------------------------");
         List<Ligne> data = DataLoader.loadData(properties.getProperty("data.file.path"));
         FileCreator fileCreator = new FileCreator(properties.getProperty("path.newFile"), data);
+        System.out.println("--------------------------------------------------------------");
         fileCreator.createFile("byCountry", Ligne::getCountry);
-        //fileCreator.createFile("byCustomer", Ligne::getCustomerID);
-        // fileCreator.createFile("byInvoice", Ligne::getInvoiceNo);
+        fileCreator.createFile("byCustomer", Ligne::getCustomerID);
+        fileCreator.createFile("byInvoice", Ligne::getInvoiceNo);
     }
 
     private static Properties loadConfig() {
@@ -27,7 +29,7 @@ public class Main {
         }
     }
 
-    public static Map<String, Map<String, Integer>> resolveProductDescription(final List<Ligne> data) {
+     static Map<String, Map<String, Integer>> resolveProductDescription(final List<Ligne> data) {
         Map<String, List<String>> map = data.stream()
                                             .collect(
                                                     Collectors.groupingBy(

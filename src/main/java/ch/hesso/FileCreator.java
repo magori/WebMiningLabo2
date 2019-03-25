@@ -15,20 +15,21 @@ class FileCreator {
 
     private final String pathNewFile;
     private final List<Ligne> data;
+    private final Map<String, Map<String, Integer>> productDescription;
 
     public FileCreator(final String pathNewFile, final List<Ligne> data) {
         this.pathNewFile = pathNewFile;
         this.data = data;
+        this.productDescription = Main.resolveProductDescription(this.data);
+        System.out.println("Nb products: " + this.productDescription.size());
     }
 
     public void createFile(final String fileName, final Function<Ligne, String> fieldGrouping) throws IOException {
         final Instant start = Instant.now();
-        final Map<String, Map<String, Integer>> productDescription = Main.resolveProductDescription(this.data);
-        final List<String> idsProducts = new ArrayList<>(productDescription.keySet());
+        final List<String> idsProducts = new ArrayList<>(this.productDescription.keySet());
         final Map<String, List<Ligne>> map = groupeBy(fieldGrouping, this.data);
 
-        System.out.println("Nb products: " + productDescription.size());
-        System.out.println("Nb lingne in new file(" + fileName + ".csv): " + map.size());
+        System.out.println("Nb ligne in new file(" + fileName + ".csv): " + map.size());
 
         List<String> newList = map.entrySet()
                                   .stream()

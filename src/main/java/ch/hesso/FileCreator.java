@@ -46,13 +46,11 @@ class FileCreator {
         System.out.println("--------------------------------------------");
     }
 
-
     private Map<String, List<Ligne>> groupeBy(final Function<Ligne, String> champs, final List<Ligne> data) {
         return data.stream()
                    .filter(p -> !champs.apply(p).isEmpty())
                    .collect(Collectors.groupingBy(champs));
     }
-
 
     private String createHead(final Map<String, Map<String, Integer>> productDescrition) {
         return productDescrition
@@ -70,7 +68,6 @@ class FileCreator {
                 })
                 .reduce("ID", (acc, description) -> acc + "," + description);
     }
-
 
     private Path createNewFile(final String fileName, final String head, final List<String> newList) throws IOException {
         Path newFilePath = Paths.get(this.pathNewFile + "\\" + fileName + ".csv");

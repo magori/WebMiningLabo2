@@ -10,7 +10,6 @@ public class Ligne {
     private String customerID;
     private String country;
 
-
     public Ligne(List<String> list) {
         this.setCustomerID(list.get(Champs.CustomerID.getIndex()).trim());
         this.setCountry(list.get(Champs.Country.getIndex()).trim());
@@ -25,35 +24,29 @@ public class Ligne {
         return this;
     }
 
-
     public Ligne setStockCode(final String stockCode) {
         this.stockCode = stockCode;
         return this;
-
     }
 
     public Ligne setDescription(final String description) {
         this.description = description;
         return this;
-
     }
 
     public Ligne setQuantity(final Integer quantity) {
         this.quantity = quantity;
         return this;
-
     }
 
     public Ligne setCustomerID(final String customerID) {
         this.customerID = customerID;
         return this;
-
     }
 
     public Ligne setCountry(final String country) {
         this.country = country;
         return this;
-
     }
 
     public String getInvoiceNo() {

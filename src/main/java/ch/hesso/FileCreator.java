@@ -28,7 +28,7 @@ class FileCreator {
         final Map<String, List<Ligne>> map = groupeBy(fieldGrouping, this.data);
 
         System.out.println("Nb products: " + productDescription.size());
-        System.out.println("Map (" + fileName + ") size: " + map.size());
+        System.out.println("Nb lingne in new file(" + fileName + ".csv): " + map.size());
 
         List<String> newList = map.entrySet()
                                   .stream()
@@ -39,9 +39,11 @@ class FileCreator {
         final String head = createHead(productDescription);
         System.out.println("Processing Time: " + Duration.between(start, Instant.now()).toMillis() + "ms");
 
-        createNewFile(fileName, head, newList);
+        Path path = createNewFile(fileName, head, newList);
         long timeElapsed = Duration.between(start, Instant.now()).toMillis();
-        System.out.println("Total Time: " + timeElapsed + "ms");
+        System.out.println("Total time for create the file: " + timeElapsed + "ms");
+        System.out.println("File created: " + path);
+        System.out.println("--------------------------------------------");
     }
 
 
@@ -70,7 +72,7 @@ class FileCreator {
     }
 
 
-    private void createNewFile(final String fileName, final String head, final List<String> newList) throws IOException {
+    private Path createNewFile(final String fileName, final String head, final List<String> newList) throws IOException {
         Path newFilePath = Paths.get(this.pathNewFile + "\\" + fileName + ".csv");
         try (BufferedWriter writer = Files.newBufferedWriter(newFilePath)) {
             writer.write(head + "\n");
@@ -82,6 +84,7 @@ class FileCreator {
                 }
             });
         }
+        return newFilePath;
     }
 
     private static String createLigne(final Collection<String> allProducts, final Map.Entry<String, List<Ligne>> entry) {

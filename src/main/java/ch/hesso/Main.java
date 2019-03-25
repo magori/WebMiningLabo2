@@ -9,11 +9,11 @@ public class Main {
     private static Properties properties = loadConfig();
 
     public static void main(String args[]) throws IOException {
-        List<Ligne> data = DataLoader.loadData(properties.getProperty("file.path"));
-        FileCreator fileCreator = new FileCreator(properties.getProperty("path.newFile"),data);
+        List<Ligne> data = DataLoader.loadData(properties.getProperty("data.file.path"));
+        FileCreator fileCreator = new FileCreator(properties.getProperty("path.newFile"), data);
         fileCreator.createFile("byCountry", Ligne::getCountry);
-        fileCreator.createFile("byCustomer", Ligne::getCustomerID);
-        fileCreator.createFile("byInvoice", Ligne::getInvoiceNo);
+        //fileCreator.createFile("byCustomer", Ligne::getCustomerID);
+        // fileCreator.createFile("byInvoice", Ligne::getInvoiceNo);
     }
 
     private static Properties loadConfig() {

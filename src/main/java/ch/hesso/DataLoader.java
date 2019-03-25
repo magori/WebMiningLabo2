@@ -26,14 +26,14 @@ class DataLoader {
     }
 
     private static List<Ligne> cleanData(List<Ligne> dataFromFile) {
-        System.out.println("Nb ligne in file : " + dataFromFile.size());
+        System.out.println("Nb ligne in data file: " + dataFromFile.size());
         dataFromFile = dataFromFile.stream()
                                    .filter(ligne -> !ligne.getDescription().isEmpty())
                                    .filter(ligne -> ligne.getQuantity() > 0)
                                    .collect(Collectors.toList());
 
         uniformStockCode(dataFromFile);
-        System.out.println("Nb ligne after filtered in file: " + dataFromFile.size());
+        System.out.println("Nb ligne after cleaning in file: " + dataFromFile.size());
         return dataFromFile;
     }
 

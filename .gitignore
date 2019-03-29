@@ -1,3 +1,5 @@
+data/
+
 .idea/
 
 # Created by https://www.gitignore.io/api/sbt,latex,scala,intellij
@@ -368,3 +370,7 @@ project/plugins/project/
 *.class
 
 # End of https://www.gitignore.io/api/sbt,latex,scala,intellij
+
+\.DS_Store
+
+productcsv\.iml

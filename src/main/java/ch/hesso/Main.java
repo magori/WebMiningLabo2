@@ -19,7 +19,7 @@ public class Main {
     }
 
     private static Properties loadConfig() {
-        try (InputStream in = Main.class.getClassLoader().getResourceAsStream("config.properties")) {
+        try (InputStream in = Main.class.getClassLoader().getResourceAsStream("application.properties")) {
             Properties applicationProps = new Properties();
             applicationProps.load(in);
             return applicationProps;
@@ -29,26 +29,34 @@ public class Main {
         }
     }
 
-     static Map<String, Map<String, Integer>> resolveProductDescription(final List<Ligne> data) {
-        Map<String, List<String>> map = data.stream()
+    /**
+     * Permet de trouver la descriptions des produits.
+     * La map des descriptions est ordré de plus grande nombre de fois que la description est utilisée.
+     *
+     * @param data les données à traiter.
+     *
+     * @return Map<keyStockCode, Map < Description, nbFoisUtiliseé>>
+     */
+    static Map<String, Map<String, Integer>> resolveProductDescription(final List<Ligne> data) {
+        Map<String, List<String>> stockCodeListDescription = data.stream()
                                             .collect(
                                                     Collectors.groupingBy(
                                                             Ligne::getStockCode,
                                                             Collectors.mapping(Ligne::getDescription, Collectors.toList())
                                                     ));
-        Map<String, Map<String, Integer>> mapN = new HashMap<>();
-        for (Map.Entry<String, List<String>> e : map.entrySet()) {
+        Map<String, Map<String, Integer>> stockCodeMapDesciptionNbUsed = new HashMap<>();
+        for (Map.Entry<String, List<String>> e : stockCodeListDescription.entrySet()) {
             Map<String, Integer> m = new HashMap<>();
             for (String libelle : e.getValue()) {
                 m.putIfAbsent(libelle, 0);
                 m.computeIfPresent(libelle, (s, i) -> i + 1);
             }
-            mapN.put(e.getKey(), m.entrySet()
+            stockCodeMapDesciptionNbUsed.put(e.getKey(), m.entrySet()
                                   .stream()
                                   .sorted(Collections.reverseOrder(Comparator.comparing(Map.Entry::getValue)))
                                   .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new)));
         }
 
-        return mapN;
+        return stockCodeMapDesciptionNbUsed;
     }
 }

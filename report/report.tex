@@ -1,0 +1,105 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=4cm]{geometry}
+\usepackage{scalerel}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{xspace}
+\usepackage{url}
+\usepackage{lmodern}
+\usepackage{float}
+\usepackage{todonotes}
+
+\definecolor{myblue}{rgb}{0.33,0.61,0.83}
+\definecolor{mygreen}{rgb}{0.39,0.56,0.31}
+\definecolor{myorange}{rgb}{0.80,0.56,0.47}
+
+\lstset{
+	basicstyle=\ttfamily,
+	backgroundcolor=\color{gray!10!white},
+    xleftmargin=6pt,
+	framexleftmargin=6pt,
+	xrightmargin=6pt,
+    framexrightmargin=6pt,
+    framextopmargin=6pt,
+	framexbottommargin=6pt,
+    frame=tb,
+	framerule=0pt,
+	columns=fullflexible,
+	breaklines=true,
+	tabsize=2,
+	%commentstyle=\color{mygreen},
+	%keywordstyle=\color{myblue},
+	%stringstyle=\color{myorange}
+}
+
+\setlength{\headheight}{50pt}
+\setlength\parindent{0pt}
+
+\lhead{\includegraphics[scale=0.8]{imgs/logo-mse.png} \vspace{8pt}}
+
+\rhead{\textbf{Lab 2: Data Mining with RapidMiner} \\ 
+Romain Claret, Dorian Magnin \& Damien Rochat \\ 
+Web Mining}
+
+\cfoot{Page \thepage\ / \pageref{LastPage}}
+
+\pagestyle{fancy}
+
+\begin{document}
+
+\part*{Applying Data Mining Techniques Using RapidMiner Software}
+\todo{Introduction} \\
+
+\section{Spam Classification}
+
+\subsection{Questions about classification}
+\textbf{In the "Process Documents from Data" block we did not put a stemming step. Does the addition of this preprocessing have an impact on the results obtained?}
+\\\\
+\textbf{In the example above, we used a Bayesian classifier, please try other families of classifiers, what is the impact on the result?}
+\\\\
+\textbf{Finally you will use the second data source (emails.zip) on which you will apply the same process. What do you find by comparing the 2 results?}
+
+
+\section{Market basket analysis}
+\subsection{Questions about association rules}
+\textbf{Do you find any differences in the rules of association obtained between the 2 different groupings (per invoice / per customer)? Please comment on your results.}
+\\\\
+\textbf{Is it possible to generate another column / s from the initial data that produces interesting rules?}
+
+\section{Using WordNet on user comments}
+
+\textbf{Comment the results against the existing labels on the dataset.}
+\\\\
+\textbf{What is the influence of the different steps of text processing on the result you get?}
+
+\section{Conclusion}
+
+\end{document}
+
+%\begin{center}
+%	\includegraphics[scale=0.5]{imgs/architecture.png}
+%\end{center}
+
+%\begin{lstlisting}[language=sh]
+%	$ gradle run
+%\end{lstlisting}
+
+%\vspace{6pt}
+
+%\begin{itemize}  
+%\item item
+%\end{itemize}
+
+
+%\begin{figure}[H]
+%	\includegraphics[width=\linewidth]{imgs/title}
+%	\caption{Wikipedia Title}
+%	\label{fig:title}
+%\end{figure}
+

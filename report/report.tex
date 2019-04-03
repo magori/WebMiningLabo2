@@ -57,7 +57,7 @@ Web Mining}
 \todo{Introduction} \\
 
 \section{Classification de spam}
-Pour la création des fichiers CSV utilisé pour la génération de règles d’associations, un nettoyage des données a été fait. 
+Pour la création des fichiers CSV utilisé pour la génération de règles d'associations, un nettoyage des données a été fait. 
 \\
 Les lignes qui ont des données vides sont filtrés, comme par exemple le nom du produit. Quand la quantité(Quantity) est plus petite que zéro, les lignes sont aussi filtrées. 
 \\\\
@@ -85,11 +85,11 @@ Voici des données qui sont calculées lors du filtrage :
 \end{itemize}\vspace{6pt}
 Nous avons donc filtré 143985 lignes.
 \\\\
-Un autre algorithme a été fait pour standardiser la description des produits en liant la description avec le numéro du produit et l’on garde la description qui est la plus utilisée.
+Un autre algorithme a été fait pour standardiser la description des produits en liant la description avec le numéro du produit et l'on garde la description qui est la plus utilisée.
 \\ 
-Pour voir une partie de l’algorithme, il faut regarder la fonction Main.resolveProductDescription() dans le code Java.
+Pour voir une partie de l'algorithme, il faut regarder la fonction Main.resolveProductDescription() dans le code Java.
 \\\\
-Voici d’autres informations que nous calculons lors de la création des nouveaux fichiers CSV
+Voici d'autres informations que nous calculons lors de la création des nouveaux fichiers CSV
 \\
 Création du fichier par pays(permets de tester rapidement le code) :
 \begin{itemize}  
@@ -114,32 +114,179 @@ Création du fichier par facture :
 \vspace{6pt}
 Afin de pouvoir générer ces données nous avons utilisé le multi threading ce qui nous permet de diviser par deux le temps de création des fichiers.
 \\\\
-Pour lire le fichier, nous avons dû en créer un nouveau et copiant et collant son contenu. Nous pensons qui doit avoir un problème d’encodage. 
+Pour lire le fichier, nous avons dû en créer un nouveau et copiant et collant son contenu. Nous pensons qui doit avoir un problème d'encodage. 
 \\\\
 Pour tester le programme il suffit de lancer la commande mvn clean install, de modifier le fichier application.properties, pour définir ou se trouve le fichier de base, et où l'on veut créer les nouveaux fichiers.
 \\\\
-La génération de ces fichiers n’est pas simple et nous a pris beaucoup de temps. Nous pourrions encore améliorer la génération, en tenant compte des produits retourner, par exemple. Il serait aussi bien d’avoir un meilleur descriptif de ces données.   
+La génération de ces fichiers n'est pas simple et nous a pris beaucoup de temps. Nous pourrions encore améliorer la génération, en tenant compte des produits retourner, par exemple. Il serait aussi bien d'avoir un meilleur descriptif de ces données.   
 
 \subsection{Questions sur la classification}
 
-\textbf{Dans le bloc "Process Documents from Data" nous n’avons pas mis d’étape de stemming. Est-ce que l'ajout de ce préprocessing a un impact sur les résultats obtenus ?}
+\textbf{Dans le bloc "Process Documents from Data" nous n'avons pas mis d'étape de stemming. Est-ce que l'ajout de ce préprocessing a un impact sur les résultats obtenus ?}
 \\\\
-\textbf{Dans l’exemple ci-dessus, nous avons utilisé un classificateur bayésien, veuillez essayer d’autres familles de classificateurs, quel est l’impact sur le résultat obtenu ?}
+\textbf{Dans l'exemple ci-dessus, nous avons utilisé un classificateur bayésien, veuillez essayer d'autres familles de classificateurs, quel est l'impact sur le résultat obtenu ?}
 \\\\
 \textbf{Finalement vous utiliserez la seconde source de données (emails.zip) sur laquelle vous appliquerez le même process. Que constatez-vous en comparant les 2 résultats ?}
 
 
 \section{Market basket analysis}
 \subsection{Questions about association rules}
-\textbf{Constatez-vous des différences dans les règles d’associations obtenues entre les 2 regroupements différents (par facture/par client) ? Veuillez commenter vos résultats.}
+\textbf{Constatez-vous des différences dans les règles d'associations obtenues entre les 2 regroupements différents (par facture/par client) ? Veuillez commenter vos résultats.}
 \\\\
 \textbf{Est-il possible de générer une/des autre/s colonne/s à partir des données initiales qui produisent des règles intéressantes ?}
 
-\section{Questions sur les règles d’association}
+
+
+\section{Utilisation d'un WordNet sur des commentaires d'utilisateurs}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_full_process}
+	\caption{Processus complet: WordNet sur 3000 commentaires }
+	\label{fig:3_full_process}
+\end{figure}
+
+Dans le cadre de cette 3e partie, nous avons mis en place un processus capable de comparer des commentaires sous format texte fourni avec un étiquetage du sentiment (Positif, Négatif, et Neutre), avec un algorithme de prédiction capable d'extraire le sentiment d'un texte basé sur le dictionnaire WordNet. Pour simplifier la comparaison, nous avons ajouté un attribue qui vérifie que le sentiment source est le même que le sentiment prédit (matching).
+
+\subsection{Questions sur les règles d'association}
 
 \textbf{Commentez les résultats obtenus par rapport aux étiquettes existantes sur le dataset.}
-\\\\
 \textbf{Quelle est l'influence des différentes étapes de "text processing" sur le résultat que vous obtenez ?}
+
+\subsubsection{Process Documents from Data sur touts les éléments communs}
+Dans le cas où on utilise tout les éléments courant pour prétraiter le text fourni à la fonction "Extract Sentiment" (Fig. \ref{fig:3_processing_documents_full}), nous obtenons un résultat à 46\% correct.
+C'est à dire:
+\begin{itemize}
+	\item tokenisation
+	\item transformation en caractères minuscules
+	\item suppression des stop words
+	\item filtre sur la longueur des tokens
+	\item stemming (particularité nous utilisons le stemming basé sur le WordNet)
+\end{itemize}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_full}
+	\caption{Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_full_results}
+	\caption{Results of the Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full_results}
+\end{figure}
+
+
+\subsubsection{Process Documents from Data uniquement avec le module d'extraction du sentiment WordNet}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token_stopword_transform_tokens}
+	\caption{Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token_stopword_transform_tokens_results}
+	\caption{Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full}
+\end{figure}
+
+\subsubsection{Process Documents from Data composé de la tokenisation}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token_stopword_transform}
+	\caption{Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token_stopword_transform_results}
+	\caption{Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full}
+\end{figure}
+
+
+\subsubsection{Process Documents from Data composé de la tokenisation ainsi que de la transformation en caractères minuscules}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token_stopword}
+	\caption{Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token_stopword_results}
+	\caption{Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full}
+\end{figure}
+
+
+\subsubsection{Process Documents from Data composé de la tokenisation, la transformation en caractères minuscules, et la suppression des stop words}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token}
+	\caption{Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token_results}
+	\caption{Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full}
+\end{figure}
+
+
+
+\subsubsection{Process Documents from Data composé de la tokenisation, la transformation en caractères minuscules, la suppression des stop words, et un filtre sur la longueur des tokens}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem}
+	\caption{Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_results}
+	\caption{Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full}
+\end{figure}
+
+
+\subsubsection{Seuil par défaut du threshold du module d'extraction de sentiment de WordNet à 0.05}
+Les résultats sont basés sur la topologie complète (Fig.\ref{fig:3_processing_documents_full})
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\linewidth/3]{imgs/part_3/3_processing_documents_full_0_05}
+	\caption{Extract Sentiment Threshold at 0.05}
+	\label{fig:3_processing_documents_full_0_05}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_full_0_05_results}
+	\caption{Result of the extracted sentiment with the threshold at 0.05}
+	\label{fig:3_processing_documents_full_0_05_results}
+\end{figure}
+
+
+\subsubsection{Modification du threshold du module d'extraction de sentiment de WordNet à 0.5}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\linewidth/3]{imgs/part_3/3_processing_documents_full_0_5}
+	\caption{Extract Sentiment Threshold at 0.5}
+	\label{fig:3_processing_documents_full_0_5}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_full_0_5_results}
+	\caption{Result of the extracted sentiment with the threshold at 0.5}
+	\label{fig:3_processing_documents_full_0_5_results}
+\end{figure}
+
+
+
+\subsubsection{Modification du threshold du module d'extraction de sentiment de WordNet à 0.01}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\linewidth/3]{imgs/part_3/3_processing_documents_full_0_01}
+	\caption{Extract Sentiment Threshold at 0.05}
+	\label{fig:3_processing_documents_full_0_01}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_full_0_01_results}
+	\caption{Result of the extracted sentiment with the threshold at 0.01}
+	\label{fig:3_processing_documents_full_0_01_results}
+\end{figure}
+
 
 \section{Conclusion}
 

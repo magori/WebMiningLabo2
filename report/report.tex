@@ -1,7 +1,7 @@
 \documentclass[a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[english]{babel}
+\usepackage[francais]{babel}
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=4cm]{geometry}
@@ -43,7 +43,7 @@
 
 \lhead{\includegraphics[scale=0.8]{imgs/logo-mse.png} \vspace{8pt}}
 
-\rhead{\textbf{Lab 2: Data Mining with RapidMiner} \\ 
+\rhead{\textbf{Data Mining en utilisant RapidMiner} \\ 
 Romain Claret, Dorian Magnin \& Damien Rochat \\ 
 Web Mining}
 
@@ -53,30 +53,93 @@ Web Mining}
 
 \begin{document}
 
-\part*{Applying Data Mining Techniques Using RapidMiner Software}
+\part*{Application de techniques de Data Mining en utilisant le logiciel RapidMiner}
 \todo{Introduction} \\
 
-\section{Spam Classification}
+\section{Classification de spam}
+Pour la création des fichiers CSV utilisé pour la génération de règles d’associations, un nettoyage des données a été fait. 
+\\
+Les lignes qui ont des données vides sont filtrés, comme par exemple le nom du produit. Quand la quantité(Quantity) est plus petite que zéro, les lignes sont aussi filtrées. 
+\\\\
+Un algorithme a aussi été fait pour détecter des noms de produit incohérent et pour filtrer les lignes. Voici la liste des noms incohérents trouvés :
+\textit{wet pallet,sold in set?,wet damaged,faulty,posy candy bag,michel oops,wet/mouldy,
+lost,dagamed,daisy notebook,fba,taig adjust,water damage,ribbons purse,?display?,found in w/hse,damaged stock,
+samples,
+mixed up,???missing,breakages,chilli lights,dotcom set,re-adjustment,packing charge,amazon sales,?,
+mix up with c,owl doorstop,stock check,mia,wrap folk art,carriage,damages,?lost,john lewis,found box,20713,show samples,damages wax,website fixed,jumbo bag owls,wet boxes,frog candle,found,given away,mouldy,???,broken,
+wrong code,damages?,display,wet,bunny egg box,polkadot pen,?missing,dotcom,amazon adjust,damaged,returned,
+toybox  wrap,smashed,?sold as sets?,showroom,led tea lights,wet/rusty,missing?,wrong barcode,lost in space,
+crushed ctn,popcorn holder,dotcom sales,lost??,sold as 1,bingo set,thrown away.,crushed boxes,test,check,crushed,
+wet?,mailout,amazon,rain poncho,adjust,ebay,adjustment,spotty bunting,wet rusty,cracked,sale error,???lost,
+water damaged,missing,garage key fob,dotcomstock,dotcom adjust,sold as 22467,??,dotcom postage,jumbo bag toys,
+shoe shine box,?? missing,on cargo order,wrong code?,check?,label mix up,postage,wrap carousel,can't find,
+wrongly marked,retrospot lamp,thrown away,counted,????missing,cordial jug}
+\\\\
+De plus, chaque donnée de colonne est systématiquement trimée pour éviter tout problème et pour faciliter la suite du traitement. 
+\\\\
+Voici des données qui sont calculées lors du filtrage :
+\begin{itemize}  
+\item Nb ligne dans le fichier : 541909
+\item Nb ligne après nettoyage : 397924
+\item Nb produit : 3639
+\end{itemize}\vspace{6pt}
+Nous avons donc filtré 143985 lignes.
+\\\\
+Un autre algorithme a été fait pour standardiser la description des produits en liant la description avec le numéro du produit et l’on garde la description qui est la plus utilisée.
+\\ 
+Pour voir une partie de l’algorithme, il faut regarder la fonction Main.resolveProductDescription() dans le code Java.
+\\\\
+Voici d’autres informations que nous calculons lors de la création des nouveaux fichiers CSV
+\\
+Création du fichier par pays(permets de tester rapidement le code) :
+\begin{itemize}  
+\item Nb ligne in new file(byCountry.csv): 37
+\item Processing Time: 00:01.625
+\item Total time for create the file: 00:01.656
+\end{itemize}
+\vspace{6pt}
+Création du fichier par client :
+\begin{itemize}  
+\item Nb ligne in new file(byCustomer.csv): 4339
+\item Processing Time: 01:44.361
+\item Total time for create the file: 01:44.674 
+\end{itemize}
+\vspace{6pt}
+Création du fichier par facture :
+\begin{itemize}  
+\item Nb ligne in new file(byInvoice.csv): 18536
+\item Processing Time: 07:26.901
+\item Total time for create the file: 07:27.901
+\end{itemize}
+\vspace{6pt}
+Afin de pouvoir générer ces données nous avons utilisé le multi threading ce qui nous permet de diviser par deux le temps de création des fichiers.
+\\\\
+Pour lire le fichier, nous avons dû en créer un nouveau et copiant et collant son contenu. Nous pensons qui doit avoir un problème d’encodage. 
+\\\\
+Pour tester le programme il suffit de lancer la commande mvn clean install, de modifier le fichier application.properties, pour définir ou se trouve le fichier de base, et où l'on veut créer les nouveaux fichiers.
+\\\\
+La génération de ces fichiers n’est pas simple et nous a pris beaucoup de temps. Nous pourrions encore améliorer la génération, en tenant compte des produits retourner, par exemple. Il serait aussi bien d’avoir un meilleur descriptif de ces données.   
 
-\subsection{Questions about classification}
-\textbf{In the "Process Documents from Data" block we did not put a stemming step. Does the addition of this preprocessing have an impact on the results obtained?}
+\subsection{Questions sur la classification}
+
+\textbf{Dans le bloc "Process Documents from Data" nous n’avons pas mis d’étape de stemming. Est-ce que l'ajout de ce préprocessing a un impact sur les résultats obtenus ?}
 \\\\
-\textbf{In the example above, we used a Bayesian classifier, please try other families of classifiers, what is the impact on the result?}
+\textbf{Dans l’exemple ci-dessus, nous avons utilisé un classificateur bayésien, veuillez essayer d’autres familles de classificateurs, quel est l’impact sur le résultat obtenu ?}
 \\\\
-\textbf{Finally you will use the second data source (emails.zip) on which you will apply the same process. What do you find by comparing the 2 results?}
+\textbf{Finalement vous utiliserez la seconde source de données (emails.zip) sur laquelle vous appliquerez le même process. Que constatez-vous en comparant les 2 résultats ?}
 
 
 \section{Market basket analysis}
 \subsection{Questions about association rules}
-\textbf{Do you find any differences in the rules of association obtained between the 2 different groupings (per invoice / per customer)? Please comment on your results.}
+\textbf{Constatez-vous des différences dans les règles d’associations obtenues entre les 2 regroupements différents (par facture/par client) ? Veuillez commenter vos résultats.}
 \\\\
-\textbf{Is it possible to generate another column / s from the initial data that produces interesting rules?}
+\textbf{Est-il possible de générer une/des autre/s colonne/s à partir des données initiales qui produisent des règles intéressantes ?}
 
-\section{Using WordNet on user comments}
+\section{Questions sur les règles d’association}
 
-\textbf{Comment the results against the existing labels on the dataset.}
+\textbf{Commentez les résultats obtenus par rapport aux étiquettes existantes sur le dataset.}
 \\\\
-\textbf{What is the influence of the different steps of text processing on the result you get?}
+\textbf{Quelle est l'influence des différentes étapes de "text processing" sur le résultat que vous obtenez ?}
 
 \section{Conclusion}
 

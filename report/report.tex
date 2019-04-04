@@ -301,12 +301,27 @@ Pour tester le programme, il suffit de lancer la commande \textit{mvn clean inst
 \\\\
 La création de ces fichiers n'est pas simple et nous a pris beaucoup de temps. Par exemple, nous pourrions encore améliorer la génération, en tenant compte des produits retournés.
 Il serait aussi bien d'avoir un meilleur descriptif de ces données.
+\\\\
+Nous avons ensuite utilisé ces différents sets de données dans RapidMiner.
+\\
+Le process créé se charge de définir la colonne ID comme étant l'identifiant à utiliser pour la suite et de convertir les booléens de la matrice en valeures binomiales.
+\\
+Ensuite, le bloc FP-Growth se charge de compter la fréquence des différents achats. Il utilise le format d'input « items in dummy coded columns » qui correspond à la matrice de booléens contenues dans les fichiers.
+Finalement, le dernier bloc génére les règles d'associations.
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_2/2_full_process}
+	\caption{Processus complet}
+	\label{fig:2_full_process}
+\end{figure}
+
+Les fichiers byInvoice.csv et byCustomer.csv contiennent une grand quantité de données et nous nous sommes malheureusement heurtés à des problèmes matériels durant l'exécution de ce process.
+En effet, en plus d'être extrêmenent long, ce processus n'a jamais été capable de se terminer avec succès, car RapidMiner arrivait sans cesse à court de mémoire RAM.
+Nous n'avons donc pas eu la chance d'obtenir de résultat à cette étape.
 
 \subsection{Questions sur les règles d’association}
 \textbf{Constatez-vous des différences dans les règles d'associations obtenues entre les 2 regroupements différents (par facture/par client) ? Veuillez commenter vos résultats.}
 \\
-Notre premier constat est le temps nécessaire à calculer les règles d'associations des produits \textit{par clients}. En effet, a contrario le résultat pour \textit{par facture} est quasi instantané. Notre hypothèse pour expliquer cette différence de temps est \todo{WTY IS IT SO LONG}.
-Notre deuxième constatation est: \todo{WHAT IS IT?}
 
 \vspace{6pt}
 \textbf{Est-il possible de générer une/des autre/s colonne/s à partir des données initiales qui produisent des règles intéressantes ?}

@@ -13,7 +13,7 @@
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
       <operator activated="true" class="read_csv" compatibility="9.2.001" expanded="true" height="68" name="Read CSV" width="90" x="45" y="136">
-        <parameter key="csv_file" value="/Users/penguinazor/TheCloneWars/mse/mse.wem.lab2/data/part2 - market basket analysis/data.csv"/>
+        <parameter key="csv_file" value="/Users/damien/Cours/Master/WEM/Labs/lab02/data/part2 - market basket analysis/data.csv"/>
         <parameter key="column_separators" value=","/>
         <parameter key="trim_lines" value="false"/>
         <parameter key="use_quotes" value="true"/>
@@ -48,7 +48,7 @@
         <parameter key="datamanagement" value="double_array"/>
         <parameter key="data_management" value="auto"/>
       </operator>
-      <operator activated="true" class="multiply" compatibility="9.2.001" expanded="true" height="103" name="Multiply" width="90" x="179" y="136"/>
+      <operator activated="true" class="multiply" compatibility="9.2.001" expanded="true" height="82" name="Multiply" width="90" x="179" y="136"/>
       <operator activated="true" class="aggregate" compatibility="6.0.006" expanded="true" height="82" name="Aggregate (2)" origin="GENERATED_TEMPLATE" width="90" x="313" y="85">
         <parameter key="use_default_aggregation" value="false"/>
         <parameter key="attribute_filter_type" value="all"/>
@@ -185,8 +185,6 @@
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="42"/>
       <portSpacing port="sink_result 3" spacing="0"/>
-      <portSpacing port="sink_result 4" spacing="0"/>
-      <portSpacing port="sink_result 5" spacing="0"/>
       <description align="left" color="yellow" colored="false" height="35" resized="true" width="849" x="20" y="655">Outputs: association rules, frequent item set&lt;br&gt;</description>
     </process>
   </operator>

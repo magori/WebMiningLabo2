@@ -12,18 +12,21 @@
     <parameter key="process_duration_for_mail" value="30"/>
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
-      <operator activated="true" class="retrieve" compatibility="9.2.001" expanded="true" height="68" name="Retrieve byInvoice" width="90" x="45" y="34">
+      <operator activated="false" class="retrieve" compatibility="9.2.001" expanded="true" height="68" name="Retrieve byInvoice" width="90" x="45" y="34">
         <parameter key="repository_entry" value="../../data/wemlab02/2_byInvoice"/>
       </operator>
-      <operator activated="false" class="filter_example_range" compatibility="9.2.001" expanded="true" height="82" name="Filter Example Range" width="90" x="246" y="85">
-        <parameter key="first_example" value="1"/>
-        <parameter key="last_example" value="2000"/>
-        <parameter key="invert_filter" value="false"/>
-      </operator>
-      <operator activated="false" class="retrieve" compatibility="9.2.001" expanded="true" height="68" name="Retrieve byCustomer" width="90" x="45" y="136">
+      <operator activated="true" class="retrieve" compatibility="9.2.001" expanded="true" height="68" name="Retrieve byCustomer" width="90" x="45" y="136">
         <parameter key="repository_entry" value="../../data/wemlab02/2_byCustomer"/>
       </operator>
-      <operator activated="true" class="nominal_to_binominal" compatibility="9.2.001" expanded="true" height="103" name="Nominal to Binominal" width="90" x="447" y="34">
+      <operator activated="false" class="retrieve" compatibility="9.2.001" expanded="true" height="68" name="Retrieve 2_byCountry" width="90" x="45" y="238">
+        <parameter key="repository_entry" value="../../data/wemlab02/2_byCountry"/>
+      </operator>
+      <operator activated="true" class="set_role" compatibility="9.2.001" expanded="true" height="82" name="Set Role" width="90" x="246" y="34">
+        <parameter key="attribute_name" value="ID"/>
+        <parameter key="target_role" value="id"/>
+        <list key="set_additional_roles"/>
+      </operator>
+      <operator activated="true" class="nominal_to_binominal" compatibility="9.2.001" expanded="true" height="103" name="Nominal to Binominal" width="90" x="380" y="34">
         <parameter key="return_preprocessing_model" value="false"/>
         <parameter key="create_view" value="false"/>
         <parameter key="attribute_filter_type" value="all"/>
@@ -41,12 +44,7 @@
         <parameter key="transform_binominal" value="false"/>
         <parameter key="use_underscore_in_name" value="false"/>
       </operator>
-      <operator activated="true" class="set_role" compatibility="9.2.001" expanded="true" height="82" name="Set Role" width="90" x="581" y="34">
-        <parameter key="attribute_name" value="ID"/>
-        <parameter key="target_role" value="id"/>
-        <list key="set_additional_roles"/>
-      </operator>
-      <operator activated="true" class="concurrency:fp_growth" compatibility="9.2.001" expanded="true" height="82" name="FP-Growth" width="90" x="581" y="187">
+      <operator activated="true" class="concurrency:fp_growth" compatibility="9.2.001" expanded="true" height="82" name="FP-Growth" width="90" x="581" y="136">
         <parameter key="input_format" value="items in dummy coded columns"/>
         <parameter key="item_separators" value="|"/>
         <parameter key="use_quotes" value="false"/>
@@ -65,25 +63,21 @@
         <parameter key="requirement_decrease_factor" value="0.9"/>
         <enumeration key="must_contain_list"/>
       </operator>
-      <operator activated="true" class="create_association_rules" compatibility="9.2.001" expanded="true" height="82" name="Create Association Rules" width="90" x="715" y="238">
+      <operator activated="true" class="create_association_rules" compatibility="9.2.001" expanded="true" height="82" name="Create Association Rules" width="90" x="715" y="136">
         <parameter key="criterion" value="confidence"/>
         <parameter key="min_confidence" value="0.8"/>
         <parameter key="min_criterion_value" value="0.8"/>
         <parameter key="gain_theta" value="2.0"/>
         <parameter key="laplace_k" value="1.0"/>
       </operator>
-      <connect from_op="Retrieve byInvoice" from_port="output" to_op="Nominal to Binominal" to_port="example set input"/>
-      <connect from_op="Nominal to Binominal" from_port="example set output" to_op="Set Role" to_port="example set input"/>
-      <connect from_op="Set Role" from_port="example set output" to_op="FP-Growth" to_port="example set"/>
-      <connect from_op="FP-Growth" from_port="example set" to_port="result 1"/>
+      <connect from_op="Retrieve byCustomer" from_port="output" to_op="Set Role" to_port="example set input"/>
+      <connect from_op="Set Role" from_port="example set output" to_op="Nominal to Binominal" to_port="example set input"/>
+      <connect from_op="Nominal to Binominal" from_port="example set output" to_op="FP-Growth" to_port="example set"/>
       <connect from_op="FP-Growth" from_port="frequent sets" to_op="Create Association Rules" to_port="item sets"/>
-      <connect from_op="Create Association Rules" from_port="rules" to_port="result 2"/>
-      <connect from_op="Create Association Rules" from_port="item sets" to_port="result 3"/>
+      <connect from_op="Create Association Rules" from_port="rules" to_port="result 1"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
-      <portSpacing port="sink_result 3" spacing="0"/>
-      <portSpacing port="sink_result 4" spacing="0"/>
     </process>
   </operator>
 </process>

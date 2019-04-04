@@ -15,6 +15,8 @@
 \usepackage{float}
 \usepackage{todonotes}
 \usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{caption}
 
 \definecolor{myblue}{rgb}{0.33,0.61,0.83}
 \definecolor{mygreen}{rgb}{0.39,0.56,0.31}
@@ -222,32 +224,41 @@ Un arbre de décision est de moins en moins efficace plus la taille et la comple
 	\caption{Classification des emails avec un arbre de décision.}
 \end{table}
 
-\section{Market basket analysis}
 
+\pagebreak
+\section{Market basket analysis}
+\subsection{Questions about association rules}
+\textbf{Constatez-vous des différences dans les règles d'associations obtenues entre les 2 regroupements différents (par facture/par client) ? Veuillez commenter vos résultats.}
+\textbf{Est-il possible de générer une/des autre/s colonne/s à partir des données initiales qui produisent des règles intéressantes ?}
+
+\vspace{6pt}
 Pour la création des fichiers CSV utilisés pour la génération de règles d'associations, un nettoyage des données a été fait.
 \\
 Les lignes avec des données vides, comme par exemple le nom du produit sont filtrées.
 Il en est de même si la quantité est plus petite que 0.
 Un programme a été implémenté afin de détecter et filtrer les lignes avec des éventuels noms de produit incohérents.
-\\
 \\\\
 Voici une liste des noms incohérents trouvés :
 \textit{wet pallet,sold in set?,wet damaged,faulty,posy candy bag,michel oops,wet/mouldy,
 lost,dagamed,daisy notebook,fba,taig adjust,water damage,ribbons purse,?display?,found in w/hse,damaged stock,
 samples,
-mixed up,???missing,breakages,chilli lights,dotcom set,re-adjustment,packing charge,amazon sales,?,
+mixed up,
+???missing,breakages,chilli lights,dotcom set,re-adjustment, packing charge,amazon sales,?,
 mix up with c,owl doorstop,stock check,mia,wrap folk art,carriage,damages,?lost,john lewis,found box,20713,show samples,damages wax,website fixed,jumbo bag owls,wet boxes,frog candle,found,given away,mouldy,???,broken,
 wrong code,damages?,display,wet,bunny egg box,polkadot pen,?missing,dotcom,amazon adjust,damaged,returned,
 toybox  wrap,smashed,?sold as sets?,showroom,led tea lights,wet/rusty,missing?,wrong barcode,lost in space,
 crushed ctn,popcorn holder,dotcom sales,lost??,sold as 1,bingo set,thrown away.,crushed boxes,test,check,crushed,
-wet?,mailout,amazon,rain poncho,adjust,ebay,adjustment,spotty bunting,wet rusty,cracked,sale error,???lost,
+wet?,mailout,amazon,rain poncho,adjust,ebay,adjustment,spotty bunting,wet rusty,
+cracked,
+sale error,???lost,
 water damaged,missing,garage key fob,dotcomstock,dotcom adjust,sold as 22467,??,dotcom postage,jumbo bag toys,
-shoe shine box,?? missing,on cargo order,wrong code?,check?,label mix up,postage,wrap carousel,can't find,
+shoe shine box,?? missing,on cargo order,wrong code?,check?,label mix up,postage,
+wrap carousel,can't find,wrongly marked,retrospot lamp,thrown away,counted,????missing,cordial jug}
 \\\\
 De plus, chaque donnée de colonne est systématiquement trimée pour éviter tout problème et pour faciliter la suite du traitement. 
 Voici quelques statistiques calculées lors du filtrage :
-\\\\
-wrongly marked,retrospot lamp,thrown away,counted,????missing,cordial jug}
+\\
+
 \begin{itemize}
 	\item Nombre de lignes dans le fichier : 541'909
 	\item Nombre de lignes après nettoyage : 397'924
@@ -261,7 +272,7 @@ Un autre programme a été implémenté pour standardiser la description des pro
 Pour voir une partie de l'algorithme, il faut regarder la fonction \textit{Main.resolveProductDescription()} dans le code Java fourni en annexe.
 \\\\
 Ci-dessous, d'autres informations que nous calculons lors de la création des nouveaux fichiers CSV.
-\\
+\\\\
 Création du fichier par pays (permets de tester rapidement le code) :
 \begin{itemize}
 	\item Nombre de lignes dans le nouveau fichier byCountry.csv : 37
@@ -294,15 +305,9 @@ Pour tester le programme, il suffit de lancer la commande \textit{mvn clean inst
 La création de ces fichiers n'est pas simple et nous a pris beaucoup de temps. Par exemple, nous pourrions encore améliorer la génération, en tenant compte des produits retournés.
 Il serait aussi bien d'avoir un meilleur descriptif de ces données.
 
-\subsubsection*{Constatez-vous des différences dans les règles d'associations obtenues entre les 2 regroupements différents (par facture/par client) ? Veuillez commenter vos résultats.}
 
-\subsubsection*{Est-il possible de générer une/des autre/s colonne/s à partir des données initiales qui produisent des règles intéressantes ?}
-\section{Market basket analysis}
-\subsection{Questions about association rules}
-\textbf{Constatez-vous des différences dans les règles d'associations obtenues entre les 2 regroupements différents (par facture/par client) ? Veuillez commenter vos résultats.}
-\\\\
-\textbf{Est-il possible de générer une/des autre/s colonne/s à partir des données initiales qui produisent des règles intéressantes ?}
 
+\pagebreak
 \section{Utilisation d'un WordNet sur des commentaires d’utilisateurs}
 
 \begin{figure}[H]
@@ -311,38 +316,37 @@ Il serait aussi bien d'avoir un meilleur descriptif de ces données.
 	\label{fig:3_full_process}
 \end{figure}
 
-Dans le cadre de cette 3e partie, nous avons mis en place un processus capable de comparer des commentaires sous format texte fourni avec un étiquetage du sentiment (Positif, Négatif, et Neutre), avec un algorithme de prédiction capable d'extraire le sentiment d'un texte basé sur le dictionnaire WordNet. Pour simplifier la comparaison, nous avons ajouté un attribue qui vérifie que le sentiment source est le même que le sentiment prédit (matching).
+Dans le cadre de cette 3e partie, nous avons mis en place un processus capable de comparer des commentaires sous format texte fourni avec un étiquetage du sentiment (Positif, Négatif, et Neutre), avec un algorithme de prédiction capable d'extraire le sentiment d'un texte basé sur le dictionnaire WordNet. Pour simplifier la comparaison, nous avons ajouté un attribue qui vérifie que le sentiment source est le même que le sentiment prédit (appelé chez nous matching).
+\\\\
+Nous allons pour ce faire prétraiter le texte fourni à l'aide de combinaisons de différentes techniques et fournir le résultat au module "Extract Sentiment de WordNet" qui générera une prédiction du sentiment lié à l'input.
+\\\\
+Nous utiliserons les modules suivants:
+\begin{itemize}
+	\item tokenisation
+	\item transformation des caractères
+	\item stopwords
+	\item filtre sur la longueur des tokens
+	\item stemming
+\end{itemize}
 
 \subsection{Questions sur les règles d'association}
 
 \textbf{Commentez les résultats obtenus par rapport aux étiquettes existantes sur le dataset.}
 \textbf{Quelle est l'influence des différentes étapes de "text processing" sur le résultat que vous obtenez ?}
 
-\subsubsection{Process Documents from Data sur touts les éléments communs}
-Dans le cas où on utilise tout les éléments courant pour prétraiter le text fourni à la fonction "Extract Sentiment" (Fig. \ref{fig:3_processing_documents_full}), nous obtenons un résultat à 46\% correct.
-C'est à dire:
-	
-\begin{itemize}
-	\item tokenisation
-	\item transformation en caractères minuscules
-	\item suppression des stop words
-	\item filtre sur la longueur des tokens
-	\item stemming (particularité nous utilisons le stemming basé sur le WordNet)
-\end{itemize}
-
+\subsubsection{Module Extract Sentiment WordNet par défault}
+Dans le but d'explorer les influences lié aux différentes étapes de "text processing" nous allons utiliser le module de WordNet qui permet d'extraire le sentiment d'input sous format texte avec ses paramètres par défaut. (Fig.\ref{fig:3_processing_documents_full_0_05}) (Nous verrons plus tard que la notion de texte sera faite sous forme de tokens, qui est une décomposition d'un texte en mots.)
 \begin{figure}[H]
-	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_full}
-	\caption{Process Documents from Data with all elements}
-	\label{fig:3_processing_documents_full}
-\end{figure}
-\begin{figure}[H]
-	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_full_results}
-	\caption{Results of the Process Documents from Data with all elements}
-	\label{fig:3_processing_documents_full_results}
+\centering
+	\includegraphics[width=\linewidth/3]{imgs/part_3/3_processing_documents_full_0_05}
+	\caption{Extract Sentiment Default Threshold at 0.05}
+	\label{fig:3_processing_documents_full_0_05}
 \end{figure}
 
 
+\vspace{6pt}
 \subsubsection{Process Documents from Data uniquement avec le module d'extraction du sentiment WordNet}
+Nous constatons un matching à \textbf{0\%}. En effet, le module "Extract Sentiment" n'est pas capable d'interpréter le texte brut des commentaires et par conséquent donne une sortie commune Neutre (basé sur la valeur numérique 0) à toutes les entrées.
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token_stopword_transform_tokens}
 	\caption{Process Documents from Data with only the sentiment extractor from WordNet}
@@ -354,8 +358,20 @@ C'est à dire:
 	\label{fig:3_processing_documents_no_stem_filter_token_stopword_transform_tokens_results}
 \end{figure}
 
-
+\vspace{6pt}
 \subsubsection{Process Documents from Data composé de la tokenisation}
+En utilisant la tokenisation avec son paramètre par défaut (non letters) le module "Extract Sentiment" a maintenant les ressources minimums pour fonctionner et permet une prédiction à \textbf{29.7\%}. (Fig.\ref{fig:3_processing_documents_no_stem_filter_token_stopword_transform_results})
+\\
+Il est intéressant de noter qu'il y a plusieurs options pour la tokenisation. En jouant avec ces paramètres, nous obtenons les résultats suivants: (notons: que nous cherchons à augmenter le nombre de matchs (true) de l'attribue matching)
+\begin{itemize}
+	\item non letters (par défaut): \textbf{70.3\%} (Fig.\ref{fig:3_processing_documents_no_stem_filter_token_stopword_transform_results})
+	\item special characters (.:): \textbf{67.3\%}
+	\item regular expression: Pas essayé
+	\item linguistic sentences: \textbf{0\%}
+	\item linguistic tokens: \textbf{69.8\%}
+\end{itemize}
+\vspace{6pt}
+
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token_stopword_transform}
 	\caption{Process Documents from Data with tokenization}
@@ -363,16 +379,17 @@ C'est à dire:
 \end{figure}
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token_stopword_transform_results}
-	\caption{Resulats of the Process Documents from Data with tokenization}
+	\caption{Results of tokenization via non letters}
 	\label{fig:3_processing_documents_no_stem_filter_token_stopword_transform_results}
 \end{figure}
 
-
+\vspace{6pt}
 \subsubsection{Process Documents from Data composé de la tokenisation ainsi que de la transformation en caractères minuscules}
+Nous ajoutons la transformation des tokens, en utilisant le paramètre par défaut: lower case. Nous avons également essayé la seconde option: upper case, cependant le résultat est le même. Ce module uniformise les lettres des tokens en soit minuscule ou minuscules. Ce traitement nous à fait perdre un match, cependant nous gardons notre \textbf{70.3\%}. Il est intéressant de constater que pour certains commentaires, l'effet de la capitalisation irrégulière puisse avoir un impact.
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token_stopword}
 	\caption{Process Documents from Data with tokenization and low character filter}
-	\label{fig:3_processing_documents_full}
+	\label{fig:3_processing_documents_no_stem_filter_token_stopword}
 \end{figure}
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token_stopword_results}
@@ -380,8 +397,9 @@ C'est à dire:
 	\label{fig:3_processing_documents_no_stem_filter_token_stopword_results}
 \end{figure}
 
-
-\subsubsection{Process Documents from Data composé de la tokenisation, la transformation en caractères minuscules, et la suppression des stop words}
+\vspace{6pt}
+\subsubsection{Process Documents from Data composé de la tokenisation, la transformation en caractères minuscules, et la suppression des stopwords}
+En ajoutant le filtre des stopwords anglais. Nous constatons une perte en performance des prédictions avec \textbf{66.2\%}. Ce n'est pas le comportement que nous attendons généralement d'un filtre par stopword, au contraire. Nous pensons que cet effet est dû à la taille du corpus et de la perte du contexte lorsqu'il y a un sentiment fort, où l'utilisateur a tendance à accumuler via des mots de liaisons (inclue dans les stopwords) des adjectifs pour accentuer une opinion.
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_filter_token}
 	\caption{Process Documents from Data with the tokenizion, the low cases, and stopword filter}
@@ -393,8 +411,10 @@ C'est à dire:
 	\label{fig:3_processing_documents_no_stem_filter_token_results}
 \end{figure}
 
+\vspace{6pt}
+\subsubsection{Process Documents from Data composé de la tokenisation, la transformation en caractères minuscules, la suppression des stopwords, et un filtre sur la longueur des tokens}
+En utilisant les paramètres par défauts (Fig.\ref{fig:3_processing_documents_filter_tokens_default_params}) nous obtenons une performance de \textbf{60.9\%}. Cependant en tweakant les paramètres (1 en taille minimum et en gardant la taille maximum par défault 14)(Fig.\ref{fig:3_processing_documents_filter_tokens_best_params}) nous arrivons à atteindre une performance de \textbf{66.3\%}.(Fig.\ref{fig:3_processing_documents_no_stem_best_results})
 
-\subsubsection{Process Documents from Data composé de la tokenisation, la transformation en caractères minuscules, la suppression des stop words, et un filtre sur la longueur des tokens}
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem}
 	\caption{Process Documents from Data with all elements expect stemming}
@@ -402,58 +422,110 @@ C'est à dire:
 \end{figure}
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_results}
-	\caption{Results on the Process Documents from Data with all elements expect stemming}
+	\caption{Results for stemming with the defaults parameters}
 	\label{fig:3_processing_documents_no_stem_results}
 \end{figure}
-	
-	
-
-\subsubsection{Seuil par défaut du threshold du module d'extraction de sentiment de WordNet à 0.05}
-Les résultats sont basés sur la topologie complète (Fig.\ref{fig:3_processing_documents_full})
 \begin{figure}[H]
-\begin{center}
-	\includegraphics[width=\linewidth/3]{imgs/part_3/3_processing_documents_full_0_05}
-	\caption{Extract Sentiment Threshold at 0.05}
-	\label{fig:3_processing_documents_full_0_05}
-\end{center}
-\end{figure}
-\begin{figure}[H]
-	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_full_0_05_results}
-	\caption{Result of the extracted sentiment with the threshold at 0.05}
-	\label{fig:3_processing_documents_full_0_05_results}
-\end{figure}
-
-
-
-\subsubsection{Modification du threshold du module d'extraction de sentiment de WordNet à 0.01}
-\begin{figure}[H]
-\begin{center}
-	\includegraphics[width=\linewidth/3]{imgs/part_3/3_processing_documents_full_0_01}
-	\caption{Extract Sentiment Threshold at 0.05}
-	\label{fig:3_processing_documents_full_0_01}
-\end{center}
-\end{figure}
-\begin{figure}[H]
-	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_full_0_01_results}
-	\caption{Result of the extracted sentiment with the threshold at 0.01}
-	\label{fig:3_processing_documents_full_0_01_results}
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{imgs/part_3/3_processing_documents_filter_tokens_default_params}
+        \caption{Default parameters from the length filter}
+        \label{fig:3_processing_documents_filter_tokens_default_params}
+    \end{subfigure}
+    \hspace{0.1\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{imgs/part_3/3_processing_documents_filter_tokens_best_params}
+        \caption{Best parameters from the length filter}
+        \label{fig:3_processing_documents_filter_tokens_best_params}
+    \end{subfigure}
+    \caption{Parameters from the length filter}
+    \label{fig:3_processing_documents_filter_tokens_params}
 \end{figure}
 
-\subsubsection{Modification du threshold du module d'extraction de sentiment de WordNet à 0.5}
 \begin{figure}[H]
-\begin{center}
-	\caption{Extract Sentiment Threshold at 0.5}
-	\label{fig:3_processing_documents_full_0_5}
-	\includegraphics[width=\linewidth/3]{imgs/part_3/3_processing_documents_full_0_5}
-\end{center}
+	\centering
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_no_stem_best_results}
+	\caption{Results of the best parameters from the length filter}
+	\label{fig:3_processing_documents_no_stem_best_results}
+\end{figure}
+
+
+\vspace{6pt}
+\subsubsection{Process Documents from Data en ajoutant le stemming}
+Voir figure \ref{fig:3_processing_documents_full} pour la topologie. Nous avons essayé les différents modules de stemming à disposition et avons obtenu des résultats différents pour chacun:
+\begin{itemize}
+	\item Snowball: \textbf{57.9\%}
+	\item Porter: \textbf{56.5\%}
+	\item Lovins: \textbf{52.8\%}
+	\item WordNet: \textbf{68.2\%}(Fig.\ref{fig:3_processing_documents_with_stem_wordnet_results}) avec les paramètres par défauts (Fig.\ref{fig:3_processing_documents_stem_wordnet_params_default})
+\end{itemize}
+\vspace{6pt}
+Nous basant sur ces résultats, nous avons sélectionné le stemming via le WordNet et avons ajouté l'option pour autoriser les ambiguïtés (Fig.\ref{fig:3_processing_documents_stem_wordnet_params_best}), ce qui nous à permis d'obtenir un petit gain de performance pour monter à \textbf{68.4\%}.
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_full}
+	\caption{Process Documents from Data with all elements}
+	\label{fig:3_processing_documents_full}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{imgs/part_3/3_processing_documents_stem_wordnet_params_default}
+        \caption{Default parameters from the stem via WordNet}
+        \label{fig:3_processing_documents_stem_wordnet_params_default}
+    \end{subfigure}
+    \hspace{0.1\textwidth}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{imgs/part_3/3_processing_documents_stem_wordnet_params_best}
+        \caption{Best parameters from the stem via WordNet}
+        \label{fig:3_processing_documents_stem_wordnet_params_best}
+    \end{subfigure}
+    \caption{Parameters from the stemming via WordNet}
+    \label{fig:3_processing_documents_stem_wordnet_params}
 \end{figure}
 \begin{figure}[H]
-\begin{center}
-	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_full_0_5_results}
-	\caption{Result of the extracted sentiment with the threshold at 0.5}
-	\label{fig:3_processing_documents_full_0_5_results}
-\end{center}
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_with_stem_wordnet_results}
+	\caption{Results on using the default WordNet stemming parameters}
+	\label{fig:3_processing_documents_with_stem_wordnet_results}
 \end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_with_stem_wordnet_best_results}
+	\caption{Results on using the best WordNet stemming parameters}
+	\label{fig:3_processing_documents_with_stem_wordnet_best_results}
+\end{figure}
+
+
+\vspace{6pt}
+\subsubsection{Modification du module d'extraction de sentiment}
+Il nous reste, à présent, plus que le module d'extraction de sentiment à customiser. En effet, jusqu'à présent nous avons utilisé sa configuration par défaut (Fig.\ref{fig:3_processing_documents_full_0_05}), qui nous a permis d'obtenir performance cumulée de \textbf{68.4\%} (Fig.\ref{fig:3_processing_documents_stem_wordnet_params_best}). En jouant avec les paramètres à disposition(Fig.{\ref{fig:3_processing_documents_full_0_001}) nous avons réussit à obtenir une performance de \textbf{70.4\%}.(Fig.\ref{fig:3_processing_documents_full_best_results})
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=\linewidth/3]{imgs/part_3/3_processing_documents_full_0_001}
+	\caption{Extract Sentiment with threshold at 0.001}
+	\label{fig:3_processing_documents_full_0_001}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_full_best_results}
+	\caption{Results on using the best WordNet stemming parameters}
+	\label{fig:3_processing_documents_full_best_results}
+\end{figure}
+
+\vspace{6pt}
+\subsection{Notre meilleur modèle de prédiction cumulée}
+Nous n'avions qu'un module nous dégradant la prédiction(Fig.\ref{fig:3_processing_documents_no_stem_filter_token}), le filtre de stopwords. Nous l'avons donc supprimée de notre topologie (Fig.\ref{fig:3_processing_documents_optimized}) et terminons avec une performance de \textbf{72.6\%}.(Fig.\ref{fig:3_processing_documents_optimized_best_results})
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_optimized}
+	\caption{Process Documents from Data with optimized elements}
+	\label{fig:3_processing_documents_optimized}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_3/3_processing_documents_optimized_best_results}
+	\caption{Results from our best model}
+	\label{fig:3_processing_documents_optimized_best_results}
+\end{figure}
+
 
 \section{Conclusion}
 

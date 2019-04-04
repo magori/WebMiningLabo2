@@ -304,29 +304,82 @@ Il serait aussi bien d'avoir un meilleur descriptif de ces données.
 \\\\
 Nous avons ensuite utilisé ces différents sets de données dans RapidMiner.
 \\
-Le process créé se charge de définir la colonne ID comme étant l'identifiant à utiliser pour la suite et de convertir les booléens de la matrice en valeures binomiales.
-\\
-Ensuite, le bloc FP-Growth se charge de compter la fréquence des différents achats. Il utilise le format d'input « items in dummy coded columns » qui correspond à la matrice de booléens contenues dans les fichiers.
-Finalement, le dernier bloc génére les règles d'associations.
+Le process créé se charge de définir la colonne ID comme étant l'identifiant à utiliser pour la suite et de convertir les booléens de la matrice en valeurs binomiales.
+\\\\
+Ensuite, le bloc \textit{FP-Growth} se charge de compter la fréquence des différents achats. Il utilise le format d'input \textit{items in dummy coded columns} qui correspond à la matrice de booléens contenue dans les fichiers.
+\\\\
+Finalement, le dernier bloc génère les règles d'associations.
 
 \begin{figure}[H]
-	\includegraphics[width=\linewidth]{imgs/part_2/2_full_process}
-	\caption{Processus complet}
-	\label{fig:2_full_process}
+	\includegraphics[width=\linewidth]{imgs/part_2/2_full_process_1}
+	\caption{Process 2: Market Basket with boolean matrix}
+	\label{fig:2_full_process_1}
 \end{figure}
 
-Les fichiers byInvoice.csv et byCustomer.csv contiennent une grand quantité de données et nous nous sommes malheureusement heurtés à des problèmes matériels durant l'exécution de ce process.
-En effet, en plus d'être extrêmenent long, ce processus n'a jamais été capable de se terminer avec succès, car RapidMiner arrivait sans cesse à court de mémoire RAM.
-Nous n'avons donc pas eu la chance d'obtenir de résultat à cette étape.
-
-\subsection{Questions sur les règles d’association}
-\textbf{Constatez-vous des différences dans les règles d'associations obtenues entre les 2 regroupements différents (par facture/par client) ? Veuillez commenter vos résultats.}
-\\
+Nous avons également essayé une autre méthode pour fournir les données au \textit{FP-Growth}, en effet il en existe 2 de plus de la méthode mentionnée ci-dessus. Ici nous avons exploré la méthode de la concaténation. Mais il existe également la méthode de la liste espèce de liste.
+\\\\
+La méthodologie est la suivante:
+\begin{itemize}
+	\item Nous utilisons le module d'agrégation pour concaténer notre champ \textit{Description} et le grouper par l'attribue \textit{InvoiceNo}.
+	\item Nous renommons ensuite notre nouvelle colonne en \textit{Produit} dans un but esthétique.
+	\item Nous définition une d'\textit{id} à notre attribut de groupage \textit{InvoiceNo}
+	\item Puis nous utilisons l'option \textit{item list in a column} pour notre \textit{FP-Growth} en gardant les paramètres par défaut.
+	\item Puis finalement, utilisons le module \textit{Create Association} avec ses paramètres par défauts.
+\end{itemize}
 
 \vspace{6pt}
-\textbf{Est-il possible de générer une/des autre/s colonne/s à partir des données initiales qui produisent des règles intéressantes ?}
+
+Nous avons pu faire fonctionner que le "par facture", dans un temps quasi instantané. Les résultats nous semblent corrects. (Figs.\ref{fig:2_process_2_results_freq},\ref{fig:2_process_2_results_1_assoc_1},\ref{fig:2_process_2_results_1_assoc_2}) Cependant, pour "par clients", il en résulte en un échec dû à un manque de RAM (Fig,\ref{fig:2_fail}). 
+\\\\
+De plus, nos fichiers générés \textit{byInvoice.csv} et \textit{byCustomer.csv} contiennent une grande quantité de données et nous nous sommes malheureusement heurtés à des problèmes matériels durant l'exécution de ce process également. En plus d'être extrêmement long, ce processus n'a jamais été capable de se terminer avec succès, car RapidMiner arrivait sans cesse à court de mémoire RAM.(Fig.\ref{fig:2_fail})
 \\
-\todo{I DONT KNOW}
+Nous n'avons donc pas eu la chance d'obtenir de résultat à cette étape.
+\\\\
+Pour finir, nous somme tout à fait conscient de la raison logique qui implique que le calcule nécessaire pour effectuer "par facture" est moindre par rapport au "par client". En effet, nous avons un set de \textbf{25900} IDs uniques pour les factures et \textbf{139452} IDs uniques pour les clients, soit plus de 5 fois plus, avec une répercussion matricielle.
+\\\\
+Les valeurs ont été extraite à l'aide d'un script python.
+\begin{lstlisting}[language=python]
+>>> import pandas
+>>> data = pandas.read_csv('data.csv')
+>>> print("invoices count:",len(set(data['InvoiceNo'])))
+>>> print("customers count:",len(set(data['CustomerID'])))
+invoices count: 25900
+customers count: 139452
+\end{lstlisting}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{imgs/part_2/2_full_process_2}
+	\caption{Process 2: Market Basket with concatenated columns}
+	\label{fig:2_full_process_2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth/1]{imgs/part_2/2_process_2_results_freq}
+	\caption{Process 2 result: Frequencies}
+	\label{fig:2_process_2_results_freq}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth/1]{imgs/part_2/2_process_2_results_1_assoc_1}
+	\caption{Process 2 result: Association Rule Part 1}
+	\label{fig:2_process_2_results_1_assoc_1}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth/1]{imgs/part_2/2_process_2_results_1_assoc_2}
+	\caption{Process 2 result: Association Rule Part 2}
+	\label{fig:2_process_2_results_1_assoc_2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth/1]{imgs/part_2/2_fail}
+	\caption{Failure while creating association}
+	\label{fig:2_fail}
+\end{figure}
 
 \vspace{6pt}
 

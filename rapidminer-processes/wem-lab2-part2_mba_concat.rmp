@@ -12,8 +12,8 @@
     <parameter key="process_duration_for_mail" value="30"/>
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
-      <operator activated="true" class="read_csv" compatibility="9.2.001" expanded="true" height="68" name="Read CSV" width="90" x="45" y="136">
-        <parameter key="csv_file" value="/Users/damien/Cours/Master/WEM/Labs/lab02/data/part2 - market basket analysis/data.csv"/>
+      <operator activated="true" class="read_csv" compatibility="9.2.001" expanded="true" height="68" name="Read CSV" width="90" x="112" y="85">
+        <parameter key="csv_file" value="/Users/penguinazor/TheCloneWars/mse/mse.wem.lab2/data/part2 - market basket analysis/data.csv"/>
         <parameter key="column_separators" value=","/>
         <parameter key="trim_lines" value="false"/>
         <parameter key="use_quotes" value="true"/>
@@ -48,8 +48,8 @@
         <parameter key="datamanagement" value="double_array"/>
         <parameter key="data_management" value="auto"/>
       </operator>
-      <operator activated="true" class="multiply" compatibility="9.2.001" expanded="true" height="82" name="Multiply" width="90" x="179" y="136"/>
-      <operator activated="true" class="aggregate" compatibility="6.0.006" expanded="true" height="82" name="Aggregate (2)" origin="GENERATED_TEMPLATE" width="90" x="313" y="85">
+      <operator activated="true" class="multiply" compatibility="9.2.001" expanded="true" height="103" name="Multiply" width="90" x="246" y="85"/>
+      <operator activated="true" class="aggregate" compatibility="6.0.006" expanded="true" height="82" name="Aggregate" origin="GENERATED_TEMPLATE" width="90" x="380" y="34">
         <parameter key="use_default_aggregation" value="false"/>
         <parameter key="attribute_filter_type" value="all"/>
         <parameter key="attribute" value=""/>
@@ -72,17 +72,17 @@
         <parameter key="only_distinct" value="false"/>
         <parameter key="ignore_missings" value="true"/>
       </operator>
-      <operator activated="true" class="rename" compatibility="9.2.001" expanded="true" height="82" name="Rename (2)" origin="GENERATED_TEMPLATE" width="90" x="447" y="85">
+      <operator activated="true" class="rename" compatibility="9.2.001" expanded="true" height="82" name="Rename" origin="GENERATED_TEMPLATE" width="90" x="514" y="34">
         <parameter key="old_name" value="concat(Description)"/>
         <parameter key="new_name" value="Products"/>
         <list key="rename_additional_attributes"/>
       </operator>
-      <operator activated="true" class="set_role" compatibility="9.2.001" expanded="true" height="82" name="Set Role (2)" origin="GENERATED_TEMPLATE" width="90" x="581" y="85">
+      <operator activated="true" class="set_role" compatibility="9.2.001" expanded="true" height="82" name="Set Role" origin="GENERATED_TEMPLATE" width="90" x="648" y="34">
         <parameter key="attribute_name" value="InvoiceNo"/>
         <parameter key="target_role" value="id"/>
         <list key="set_additional_roles"/>
       </operator>
-      <operator activated="true" class="concurrency:fp_growth" compatibility="9.2.001" expanded="true" height="82" name="FP-Growth (2)" origin="GENERATED_TEMPLATE" width="90" x="715" y="85">
+      <operator activated="true" class="concurrency:fp_growth" compatibility="9.2.001" expanded="true" height="82" name="FP-Growth" origin="GENERATED_TEMPLATE" width="90" x="782" y="34">
         <parameter key="input_format" value="item list in a column"/>
         <parameter key="item_separators" value="|"/>
         <parameter key="use_quotes" value="false"/>
@@ -102,14 +102,14 @@
         <parameter key="requirement_decrease_factor" value="0.9"/>
         <enumeration key="must_contain_list"/>
       </operator>
-      <operator activated="true" class="create_association_rules" compatibility="9.2.001" expanded="true" height="82" name="Create Association Rules (2)" origin="GENERATED_TEMPLATE" width="90" x="849" y="85">
+      <operator activated="true" class="create_association_rules" compatibility="9.2.001" expanded="true" height="82" name="Create Association Rules" origin="GENERATED_TEMPLATE" width="90" x="916" y="34">
         <parameter key="criterion" value="confidence"/>
         <parameter key="min_confidence" value="0.1"/>
         <parameter key="min_criterion_value" value="0.8"/>
         <parameter key="gain_theta" value="2.0"/>
         <parameter key="laplace_k" value="1.0"/>
       </operator>
-      <operator activated="false" class="aggregate" compatibility="6.0.006" expanded="true" height="82" name="Aggregate (3)" origin="GENERATED_TEMPLATE" width="90" x="313" y="238">
+      <operator activated="false" class="aggregate" compatibility="6.0.006" expanded="true" height="82" name="Aggregate (2)" origin="GENERATED_TEMPLATE" width="90" x="380" y="187">
         <parameter key="use_default_aggregation" value="false"/>
         <parameter key="attribute_filter_type" value="all"/>
         <parameter key="attribute" value=""/>
@@ -132,17 +132,17 @@
         <parameter key="only_distinct" value="false"/>
         <parameter key="ignore_missings" value="true"/>
       </operator>
-      <operator activated="false" class="rename" compatibility="9.2.001" expanded="true" height="82" name="Rename (3)" origin="GENERATED_TEMPLATE" width="90" x="447" y="238">
+      <operator activated="false" class="rename" compatibility="9.2.001" expanded="true" height="82" name="Rename (2)" origin="GENERATED_TEMPLATE" width="90" x="514" y="187">
         <parameter key="old_name" value="concat(Description)"/>
         <parameter key="new_name" value="Products"/>
         <list key="rename_additional_attributes"/>
       </operator>
-      <operator activated="false" class="set_role" compatibility="9.2.001" expanded="true" height="82" name="Set Role (3)" origin="GENERATED_TEMPLATE" width="90" x="581" y="238">
+      <operator activated="false" class="set_role" compatibility="9.2.001" expanded="true" height="82" name="Set Role (2)" origin="GENERATED_TEMPLATE" width="90" x="648" y="187">
         <parameter key="attribute_name" value="CustomerID"/>
         <parameter key="target_role" value="id"/>
         <list key="set_additional_roles"/>
       </operator>
-      <operator activated="false" class="concurrency:fp_growth" compatibility="9.2.001" expanded="true" height="82" name="FP-Growth (3)" origin="GENERATED_TEMPLATE" width="90" x="715" y="238">
+      <operator activated="false" class="concurrency:fp_growth" compatibility="9.2.001" expanded="true" height="82" name="FP-Growth (2)" origin="GENERATED_TEMPLATE" width="90" x="782" y="187">
         <parameter key="input_format" value="item list in a column"/>
         <parameter key="item_separators" value="|"/>
         <parameter key="use_quotes" value="false"/>
@@ -162,7 +162,7 @@
         <parameter key="requirement_decrease_factor" value="0.9"/>
         <enumeration key="must_contain_list"/>
       </operator>
-      <operator activated="false" class="create_association_rules" compatibility="9.2.001" expanded="true" height="82" name="Create Association Rules (3)" origin="GENERATED_TEMPLATE" width="90" x="849" y="238">
+      <operator activated="false" class="create_association_rules" compatibility="9.2.001" expanded="true" height="82" name="Create Association Rules (2)" origin="GENERATED_TEMPLATE" width="90" x="916" y="187">
         <parameter key="criterion" value="confidence"/>
         <parameter key="min_confidence" value="0.1"/>
         <parameter key="min_criterion_value" value="0.8"/>
@@ -170,22 +170,23 @@
         <parameter key="laplace_k" value="1.0"/>
       </operator>
       <connect from_op="Read CSV" from_port="output" to_op="Multiply" to_port="input"/>
-      <connect from_op="Multiply" from_port="output 1" to_op="Aggregate (2)" to_port="example set input"/>
+      <connect from_op="Multiply" from_port="output 1" to_op="Aggregate" to_port="example set input"/>
+      <connect from_op="Aggregate" from_port="example set output" to_op="Rename" to_port="example set input"/>
+      <connect from_op="Rename" from_port="example set output" to_op="Set Role" to_port="example set input"/>
+      <connect from_op="Set Role" from_port="example set output" to_op="FP-Growth" to_port="example set"/>
+      <connect from_op="FP-Growth" from_port="frequent sets" to_op="Create Association Rules" to_port="item sets"/>
+      <connect from_op="Create Association Rules" from_port="rules" to_port="result 1"/>
+      <connect from_op="Create Association Rules" from_port="item sets" to_port="result 2"/>
       <connect from_op="Aggregate (2)" from_port="example set output" to_op="Rename (2)" to_port="example set input"/>
       <connect from_op="Rename (2)" from_port="example set output" to_op="Set Role (2)" to_port="example set input"/>
       <connect from_op="Set Role (2)" from_port="example set output" to_op="FP-Growth (2)" to_port="example set"/>
       <connect from_op="FP-Growth (2)" from_port="frequent sets" to_op="Create Association Rules (2)" to_port="item sets"/>
-      <connect from_op="Create Association Rules (2)" from_port="rules" to_port="result 1"/>
-      <connect from_op="Create Association Rules (2)" from_port="item sets" to_port="result 2"/>
-      <connect from_op="Aggregate (3)" from_port="example set output" to_op="Rename (3)" to_port="example set input"/>
-      <connect from_op="Rename (3)" from_port="example set output" to_op="Set Role (3)" to_port="example set input"/>
-      <connect from_op="Set Role (3)" from_port="example set output" to_op="FP-Growth (3)" to_port="example set"/>
-      <connect from_op="FP-Growth (3)" from_port="frequent sets" to_op="Create Association Rules (3)" to_port="item sets"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="42"/>
       <portSpacing port="sink_result 3" spacing="0"/>
-      <description align="left" color="yellow" colored="false" height="35" resized="true" width="849" x="20" y="655">Outputs: association rules, frequent item set&lt;br&gt;</description>
+      <portSpacing port="sink_result 4" spacing="0"/>
+      <portSpacing port="sink_result 5" spacing="0"/>
     </process>
   </operator>
 </process>

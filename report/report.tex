@@ -227,11 +227,8 @@ Un arbre de décision est de moins en moins efficace plus la taille et la comple
 
 \pagebreak
 \section{Market basket analysis}
-\subsection{Questions about association rules}
-\textbf{Constatez-vous des différences dans les règles d'associations obtenues entre les 2 regroupements différents (par facture/par client) ? Veuillez commenter vos résultats.}
-\textbf{Est-il possible de générer une/des autre/s colonne/s à partir des données initiales qui produisent des règles intéressantes ?}
 
-\vspace{6pt}
+\subsection{Details sur l'implémentation et ses résultats}
 Pour la création des fichiers CSV utilisés pour la génération de règles d'associations, un nettoyage des données a été fait.
 \\
 Les lignes avec des données vides, comme par exemple le nom du produit sont filtrées.
@@ -305,7 +302,18 @@ Pour tester le programme, il suffit de lancer la commande \textit{mvn clean inst
 La création de ces fichiers n'est pas simple et nous a pris beaucoup de temps. Par exemple, nous pourrions encore améliorer la génération, en tenant compte des produits retournés.
 Il serait aussi bien d'avoir un meilleur descriptif de ces données.
 
+\subsection{Questions sur les règles d’association}
+\textbf{Constatez-vous des différences dans les règles d'associations obtenues entre les 2 regroupements différents (par facture/par client) ? Veuillez commenter vos résultats.}
+\\
+Notre premier constat est le temps nécessaire à calculer les règles d'associations des produits \textit{par clients}. En effet, a contrario le résultat pour \textit{par facture} est quasi instantané. Notre hypothèse pour expliquer cette différence de temps est \todo{WTY IS IT SO LONG}.
+Notre deuxième constatation est: \todo{WHAT IS IT?}
 
+\vspace{6pt}
+\textbf{Est-il possible de générer une/des autre/s colonne/s à partir des données initiales qui produisent des règles intéressantes ?}
+\\
+\todo{I DONT KNOW}
+
+\vspace{6pt}
 
 \pagebreak
 \section{Utilisation d'un WordNet sur des commentaires d’utilisateurs}
